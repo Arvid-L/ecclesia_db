@@ -5,7 +5,7 @@ defmodule EcclesiaDb.MixProject do
     [
       app: :ecclesia_db,
       version: "0.1.0",
-      elixir: "~> 1.14",
+      elixir: "1.15.7",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -50,7 +50,8 @@ defmodule EcclesiaDb.MixProject do
       {:gettext, "~> 0.20"},
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
-      {:plug_cowboy, "~> 2.5"}
+      {:plug_cowboy, "~> 2.5"},
+      {:timex, "~> 3.7"}
     ]
   end
 
