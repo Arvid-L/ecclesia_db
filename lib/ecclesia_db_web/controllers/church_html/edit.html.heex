@@ -1,0 +1,8 @@
+<.header>
+  Edit Church <%= @church.id %>
+  <:subtitle>Use this form to manage church records in your database.</:subtitle>
+</.header>
+
+<.church_form changeset={@changeset} action={~p"/churches/#{@church}"} />
+
+<.back navigate={~p"/churches"}>Back to churches</.back>

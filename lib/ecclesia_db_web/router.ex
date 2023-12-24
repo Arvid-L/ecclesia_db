@@ -18,6 +18,8 @@ defmodule EcclesiaDbWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+
+    resources "/churches", ChurchController
   end
 
   # Other scopes may use custom stacks.

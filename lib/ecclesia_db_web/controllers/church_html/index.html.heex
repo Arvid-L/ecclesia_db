@@ -1,0 +1,25 @@
+<.header>
+  Listing Churches
+  <:actions>
+    <.link href={~p"/churches/new"}>
+      <.button>New Church</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.table id="churches" rows={@churches} row_click={&JS.navigate(~p"/churches/#{&1}")}>
+  <:col :let={church} label="Name"><%= church.name %></:col>
+  <:col :let={church} label="Description"><%= church.description %></:col>
+  <:col :let={church} label="Location"><%= church.location %></:col>
+  <:action :let={church}>
+    <div class="sr-only">
+      <.link navigate={~p"/churches/#{church}"}>Show</.link>
+    </div>
+    <.link navigate={~p"/churches/#{church}/edit"}>Edit</.link>
+  </:action>
+  <:action :let={church}>
+    <.link href={~p"/churches/#{church}"} method="delete" data-confirm="Are you sure?">
+      Delete
+    </.link>
+  </:action>
+</.table>

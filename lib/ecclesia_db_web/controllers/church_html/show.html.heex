@@ -1,0 +1,17 @@
+<.header>
+  Church <%= @church.id %>
+  <:subtitle>This is a church record from your database.</:subtitle>
+  <:actions>
+    <.link href={~p"/churches/#{@church}/edit"}>
+      <.button>Edit church</.button>
+    </.link>
+  </:actions>
+</.header>
+
+<.list>
+  <:item title="Name"><%= @church.name %></:item>
+  <:item title="Description"><%= @church.description %></:item>
+  <:item title="Location"><%= @church.location %></:item>
+</.list>
+
+<.back navigate={~p"/churches"}>Back to churches</.back>
