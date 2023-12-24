@@ -35,3 +35,8 @@ ecclesia_db-*.tar
 npm-debug.log
 /assets/node_modules/
 
+.DS_Store
+
+/secrets
+
+/assets/images/example/*
