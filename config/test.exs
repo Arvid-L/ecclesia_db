@@ -11,12 +11,13 @@ config :ecclesia_db, EcclesiaDb.Repo,
   hostname: "localhost",
   database: "ecclesia_db_test#{System.get_env("MIX_TEST_PARTITION")}",
   pool: Ecto.Adapters.SQL.Sandbox,
-  pool_size: 10
+  pool_size: 10,
+  port: 5432
 
 # We don't run a server during test. If one is required,
 # you can enable the server option below.
 config :ecclesia_db, EcclesiaDbWeb.Endpoint,
-  http: [ip: {127, 0, 0, 1}, port: 4002],
+  http: [ip: {0, 0, 0, 0}, port: 4002],
   secret_key_base: "zwcQfBLa+gSMeqz3Mk9aJPeTVRlh597xWMtPSNYnId7Vlnjlt2dq0TiI/aQM0Irh",
   server: false
 
