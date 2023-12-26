@@ -1,4 +1,4 @@
-name: Elixir CI
+name: Compile, Test, Format, Credo
 
 on: pull_request
 
