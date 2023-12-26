@@ -16,7 +16,7 @@ jobs:
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
-          MIX_ENV: test
+          MIX_ENV: dev
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
@@ -34,7 +34,7 @@ jobs:
         env:
           # The hostname used to communicate with the PostgreSQL service container
           DB_HOST: postgres
-          MIX_ENV: test
+          MIX_ENV: dev
       - name: Run tests
         run: mix test
         env:
