@@ -6,7 +6,7 @@ jobs:
   test:
     name: Build and test
     runs-on: ubuntu-latest
-    container: elixir:1.11.2
+    container: elixir:1.15.7
     services:
       # Label used to access the service container
       postgres:
