@@ -21,7 +21,11 @@ defmodule EcclesiaDb.ChurchesTest do
     end
 
     test "create_church/1 with valid data creates a church" do
-      valid_attrs = %{name: "some name", description: "some description", location: "some location"}
+      valid_attrs = %{
+        name: "some name",
+        description: "some description",
+        location: "some location"
+      }
 
       assert {:ok, %Church{} = church} = Churches.create_church(valid_attrs)
       assert church.name == "some name"
@@ -35,7 +39,12 @@ defmodule EcclesiaDb.ChurchesTest do
 
     test "update_church/2 with valid data updates the church" do
       church = church_fixture()
-      update_attrs = %{name: "some updated name", description: "some updated description", location: "some updated location"}
+
+      update_attrs = %{
+        name: "some updated name",
+        description: "some updated description",
+        location: "some updated location"
+      }
 
       assert {:ok, %Church{} = church} = Churches.update_church(church, update_attrs)
       assert church.name == "some updated name"
