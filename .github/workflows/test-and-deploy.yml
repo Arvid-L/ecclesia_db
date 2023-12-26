@@ -1,0 +1,54 @@
+name: Phx BP Test and Deploy to GE
+on:
+  push:
+    branches:
+      - main
+jobs:
+  test:
+    name: Build and test
+    runs-on: ubuntu-latest
+    container: elixir:1.11.2
+    services:
+      # Label used to access the service container
+      postgres:
+        # Docker Hub image
+        image: postgres
+        # Provide the password for postgres
+        env:
+          POSTGRES_PASSWORD: postgres
+          MIX_ENV: test
+        # Set health checks to wait until postgres has started
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Pre-reqs
+        run: mix local.hex --force && mix local.rebar --force
+      - name: Install dependencies
+        run: mix deps.get
+      - name: Reset DB
+        run: mix ecto.reset
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          DB_HOST: postgres
+          MIX_ENV: test
+      - name: Run tests
+        run: mix test
+        env:
+          # The hostname used to communicate with the PostgreSQL service container
+          DB_HOST: postgres
+  deploy:
+    needs: test # Will only run if the test job succeeds
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0 # Checkout the whole branch
+      - run: sudo pip install gigalixir --ignore-installed six
+      - run: gigalixir login -e "${{ secrets.GIGALIXIR_USERNAME }}" -y -p "${{ secrets.GIGALIXIR_PASSWORD }}"
+      - run: gigalixir git:remote ${{ secrets.GIGALIXIR_APP_NAME }}
+      - run: git push -f gigalixir HEAD:refs/heads/master
