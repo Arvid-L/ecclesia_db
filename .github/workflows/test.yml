@@ -12,29 +12,35 @@ jobs:
       postgres:
         # Docker Hub image
         image: postgres
-        ports: ["5432:5432"]
         # Provide the password for postgres
         env:
           POSTGRES_PASSWORD: postgres
-          # MIX_ENV: dev
+          MIX_ENV: test
         # Set health checks to wait until postgres has started
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
           --health-timeout 5s
           --health-retries 5
+        ports:
+          - 5432:5432
     steps:
       - uses: actions/checkout@v2
       - name: Install Pre-reqs
         run: mix local.hex --force && mix local.rebar --force
       - name: Install dependencies
         run: mix deps.get
+      - name: Check DB
+        run: pg_isready
+      - name: Check DB 2
+        run: pg_isready -h postgres -U postgres
       - name: Reset DB
         run: mix ecto.reset
         env:
           # The hostname used to communicate with the PostgreSQL service container
           DB_HOST: postgres
-          # MIX_ENV: dev
+          POSTGRES_PASSWORD: postgres
+          MIX_ENV: test
       - name: Run tests
         run: mix test
         env:
