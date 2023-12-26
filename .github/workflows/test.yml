@@ -1,46 +1,40 @@
-on:
-  push:
-    branches-ignore:
-      - master
+name: Elixir CI
+
+on: push
+
 jobs:
-  test:
-    name: Build and test
+  build:
     runs-on: ubuntu-latest
-    container: elixir:1.15.7
+
+    container:
+      image: elixir:1.13.1-slim
+      env:
+        MIX_ENV: test
+
     services:
-      # Label used to access the service container
       postgres:
-        # Docker Hub image
         image: postgres
-        # Provide the password for postgres
-        env:
-          POSTGRES_PASSWORD: postgres
-          MIX_ENV: test
-        # Set health checks to wait until postgres has started
-        options: >-
-          --health-cmd pg_isready
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
         ports:
           - 5432:5432
+        env:
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_USER: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+
     steps:
       - uses: actions/checkout@v2
-      - name: Install Pre-reqs
-        run: mix local.hex --force && mix local.rebar --force
-      - name: Install dependencies
-        run: mix deps.get
-      - name: Reset DB
-        run: mix ecto.reset
+      - name: Install Dependencies
+        run: |
+          mix local.rebar --force
+          mix local.hex --force
+          mix deps.get
+      - name: Run Tests
+        run: |
+          mix ecto.create
+          mix ecto.migrate
+          mix test
         env:
-          # The hostname used to communicate with the PostgreSQL service container
           DB_HOST: postgres
-          POSTGRES_HOST: localhost
-          POSTGRES_PORT: 5432
-          POSTGRES_PASSWORD: postgres
-          MIX_ENV: test
-      - name: Run tests
-        run: mix test
-        env:
-          # The hostname used to communicate with the PostgreSQL service container
-          DB_HOST: postgres
+          DATABASE_USER: postgres
+          DATABASE_PASSWORD: postgres
+          DATABASE_HOST: postgres
