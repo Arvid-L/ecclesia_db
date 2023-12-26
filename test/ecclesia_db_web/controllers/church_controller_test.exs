@@ -4,7 +4,11 @@ defmodule EcclesiaDbWeb.ChurchControllerTest do
   import EcclesiaDb.ChurchesFixtures
 
   @create_attrs %{name: "some name", description: "some description", location: "some location"}
-  @update_attrs %{name: "some updated name", description: "some updated description", location: "some updated location"}
+  @update_attrs %{
+    name: "some updated name",
+    description: "some updated description",
+    location: "some updated location"
+  }
   @invalid_attrs %{name: nil, description: nil, location: nil}
 
   describe "index" do
