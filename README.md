@@ -7,12 +7,11 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Ready to run in production? Please [check our deployment guides](https://hexdocs.pm/phoenix/deployment.html).
+Push on main auto-deploys the app to the following Gigalixir domain: [`ecclesia-db.gigalixirapp.com`](https://ecclesia-db.gigalixirapp.com/)
 
-## Learn more
+In the meantime, here are some early design mocks:
 
-  * Official website: https://www.phoenixframework.org/
-  * Guides: https://hexdocs.pm/phoenix/overview.html
-  * Docs: https://hexdocs.pm/phoenix
-  * Forum: https://elixirforum.com/c/phoenix-forum
-  * Source: https://github.com/phoenixframework/phoenix
+![Home Screen](https://github.com/Arvid-L/ecclesia_db/blob/main/priv/static/images/uxi/home.png?raw=true)
+
+![Church Detail View](https://raw.githubusercontent.com/Arvid-L/ecclesia_db/main/priv/static/images/uxi/church-detail-view.png)
+
