@@ -52,7 +52,13 @@ defmodule EcclesiaDb.MixProject do
       {:dns_cluster, "~> 0.1.1"},
       {:plug_cowboy, "~> 2.5"},
       {:timex, "~> 3.7"},
-      {:credo, "~> 1.7"}
+      {:credo, "~> 1.7"},
+      {:ex_aws, "~> 2.5"},
+      {:ex_aws_s3, "~> 2.5"},
+      {:poison, "~> 5.0"},
+      {:hackney, "~> 1.9"},
+      {:sweet_xml, "~> 0.7"},
+      {:uuid, "~> 1.1"}
     ]
   end
 

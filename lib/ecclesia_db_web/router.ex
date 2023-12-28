@@ -18,6 +18,7 @@ defmodule EcclesiaDbWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    get "/image_example/:id", PageController, :image
 
     resources "/churches", ChurchController
   end
