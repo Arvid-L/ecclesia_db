@@ -7,7 +7,7 @@ To start your Phoenix server:
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
-Push on main auto-deploys the app to the following Gigalixir domain: [`ecclesia-db.gigalixirapp.com`](https://ecclesia-db.gigalixirapp.com/)
+Push on main auto-deploys the app to the following Gigalixir domain: [`ecclesiadb.com`](https://www.ecclesiadb.org/)
 
 In the meantime, here are some early design mocks:
 

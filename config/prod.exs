@@ -6,7 +6,13 @@ import Config
 # which you should run after static files are built and
 # before starting your production server.
 config :ecclesia_db, EcclesiaDbWeb.Endpoint,
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  url: [host: "ecclesiadb.org", port: 80],
+  check_origin: [
+    "//ecclesiadb.org",
+    "//www.ecclesiadb.org",
+    "//ecclesia-db.gigalixirapp.com/"
+  ]
 
 # Configures Swoosh API Client
 config :swoosh, api_client: Swoosh.ApiClient.Finch, finch_name: EcclesiaDb.Finch
