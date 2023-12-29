@@ -1,6 +1,7 @@
 ## 2023-12-29
 
 - setup custom domain ([Issue #3](https://github.com/Arvid-L/ecclesia_db/issues/3))
+- enable file upload and download from S3 ([Issue #4](https://github.com/Arvid-L/ecclesia_db/issues/4))
 
 ## 2023-12-27
 

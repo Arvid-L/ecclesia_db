@@ -18,7 +18,7 @@ defmodule EcclesiaDbWeb do
   """
 
   def static_paths,
-    do: ~w(assets fonts images favicon.ico favicons browserconfig.xml robots.txt)
+    do: ~w(assets fonts images favicon.ico favicons browserconfig.xml robots.txt uploads)
 
   def router do
     quote do
