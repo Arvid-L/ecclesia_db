@@ -1,0 +1,124 @@
+<div class="mb-4">
+  <h1 class="text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl">
+    Ecclesia DB Home
+  </h1>
+  <div>
+    <p>
+      This web application will allow you to view, edit and manage data about
+      every Catholic Church there is!
+    </p>
+    <p>
+      This project aims to catalogue every Catholic Church in the world, to
+      preserve their art and legacy for future generations through collaborative
+      effort.
+    </p>
+
+    <div class="mt-4">
+      <h2 class="text-xl mb-6">
+        Here are some screens of what the site could look like in the future.
+        I'll also use this space to test some feature implementations. Please ignore the layout, I'll get around to it some other time. :)
+      </h2>
+      <h3 class="text-l mb-2 text-center">
+        Variant 1: Images served from <b>priv/static/images</b>-Folder
+      </h3>
+      <div class="flex flex-wrap mb-6 w-4/5 mx-auto">
+        <img src={~p"/images/uxi/home.png"} class="w-1/2" />
+        <img src={~p"/images/uxi/church-detail-view.png"} class="w-1/2" />
+      </div>
+
+      <h3 class="text-l mb-2 text-center">
+        Variant 2: Images served from <b>AWS S3-Bucket</b>
+      </h3>
+      <div class="flex flex-wrap w-4/5 mx-auto">
+        <img src={~p"/images/home.png"} class="w-1/2" />
+        <img src={~p"/images/church-detail-view.png"} class="w-1/2" />
+      </div>
+    </div>
+
+    <div class="my-5">
+      <h2 class="text-4xl text-center">Fancy Phoenix LiveView File Upload to S3</h2>
+      <p class="mb-6 text-center">(Drag and Drop Enabled!)</p>
+      <div class="flex">
+        <div class="w-1/2">
+          <form id="upload-form" phx-submit="save" phx-change="validate">
+            <div class="flex">
+              <div>
+                <p>
+                  Upload an image, it will get saved to a S3 Bucket. The most recent uploaded image will be displayed on the right.
+                </p>
+                <br />
+                <.live_file_input upload={@uploads.avatar} />
+                <button
+                  class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-full"
+                  type="submit"
+                >
+                  Upload
+                </button>
+              </div>
+            </div>
+          </form>
+
+          <%!-- use phx-drop-target with the upload ref to enable file drag and
+          drop --%>
+          <section class="w-80 h-80 border" phx-drop-target="{@uploads.avatar.ref}">
+            <%!-- render each avatar entry --%>
+            <%= for entry <-
+            @uploads.avatar.entries do %>
+              <article class="upload-entry">
+                <figure>
+                  <.live_img_preview entry={entry} />
+                  <figcaption><%= entry.client_name %></figcaption>
+                </figure>
+
+                <%!-- entry.progress will update automatically for in-flight
+              entries --%>
+                <progress value="{entry.progress}" max="100">
+                  <%= entry.progress %>%
+                </progress>
+
+                <%!-- a regular click event whose handler will invoke
+              Phoenix.LiveView.cancel_upload/3 --%>
+                <button
+                  type="button"
+                  phx-click="cancel-upload"
+                  phx-value-ref="{entry.ref}"
+                  aria-label="cancel"
+                >
+                  &times;
+                </button>
+
+                <%!-- Phoenix.Component.upload_errors/2 returns a list of error
+              atoms --%>
+                <%= for err <- upload_errors(@uploads.avatar, entry) do %>
+                  <p class="alert alert-danger"><%= error_to_string(err) %></p>
+                <% end %>
+              </article>
+            <% end %>
+
+            <%!-- Phoenix.Component.upload_errors/1 returns a list of
+            error atoms --%>
+            <%= for err <- upload_errors(@uploads.avatar) do %>
+              <p class="alert alert-danger"><%= error_to_string(err) %></p>
+            <% end %>
+          </section>
+        </div>
+        <div class="w-1/2">
+          <h3 class="text-l mb-2">
+            Most recent uploaded image to <b>AWS S3-Bucket</b>.
+          </h3>
+          <div class="flex">
+            <img src={"images/#{@most_recent_image}"} class="w-1/2" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="flex flex-col align-middle">
+    <h1 class="mb-4 ml-4 text-4xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl text-center">
+      Christ is King!
+    </h1>
+
+    <img class="w-1/3 mx-auto" src={~p"/images/hero_section/christ_is_king.webp"} />
+  </div>
+</div>
