@@ -1,3 +1,7 @@
+## 2023-12-30
+
+- add authentication and registration ([Issue #2](https://github.com/Arvid-L/ecclesia_db/issues/2))
+
 ## 2023-12-29
 
 - setup custom domain ([Issue #3](https://github.com/Arvid-L/ecclesia_db/issues/3))
