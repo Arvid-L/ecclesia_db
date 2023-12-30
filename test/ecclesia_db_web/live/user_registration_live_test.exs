@@ -41,7 +41,13 @@ defmodule EcclesiaDbWeb.UserRegistrationLiveTest do
       {:ok, lv, _html} = live(conn, ~p"/users/register")
 
       email = unique_user_email()
-      form = form(lv, "#registration_form", user: valid_user_attributes(email: email))
+      username = unique_username()
+
+      form =
+        form(lv, "#registration_form",
+          user: valid_user_attributes(email: email, username: username)
+        )
+
       render_submit(form)
       conn = follow_trigger_action(form, conn)
 
@@ -50,7 +56,7 @@ defmodule EcclesiaDbWeb.UserRegistrationLiveTest do
       # Now do a logged in request and assert on the menu
       conn = get(conn, "/")
       response = html_response(conn, 200)
-      assert response =~ email
+      assert response =~ username
       assert response =~ "Settings"
       assert response =~ "Log out"
     end
@@ -58,12 +64,16 @@ defmodule EcclesiaDbWeb.UserRegistrationLiveTest do
     test "renders errors for duplicated email", %{conn: conn} do
       {:ok, lv, _html} = live(conn, ~p"/users/register")
 
-      user = user_fixture(%{email: "test@email.com"})
+      user = user_fixture(%{email: "test@email.com", username: "test_name"})
 
       result =
         lv
         |> form("#registration_form",
-          user: %{"email" => user.email, "password" => "valid_password"}
+          user: %{
+            "email" => user.email,
+            "password" => "valid_password",
+            "username" => user.username
+          }
         )
         |> render_submit()
 

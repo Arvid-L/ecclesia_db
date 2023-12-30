@@ -5,12 +5,17 @@ defmodule EcclesiaDb.AccountsFixtures do
   """
 
   def unique_user_email, do: "user#{System.unique_integer()}@example.com"
-  def valid_user_password, do: "hello world!"
+
+  def unique_username,
+    do: "user_#{System.unique_integer([:positive]) |> Integer.to_string() |> String.slice(0..8)}"
+
+  def valid_user_password, do: "Hello world!"
 
   def valid_user_attributes(attrs \\ %{}) do
     Enum.into(attrs, %{
       email: unique_user_email(),
-      password: valid_user_password()
+      password: valid_user_password(),
+      username: unique_username()
     })
   end
 
