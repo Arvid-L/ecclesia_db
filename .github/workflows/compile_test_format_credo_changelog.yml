@@ -128,13 +128,11 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
-      - name: Fetch latest changes
-        run: git fetch origin ${{ github.base_ref }}:$GITHUB_REF
+        uses: actions/checkout@v2 # Use actions/checkout@v2 for a simpler setup
       - name: Check if the specific line has been added to CHANGELOG.md
         run: |
-          if git diff ${{ github.base_ref }}...HEAD --name-only | grep -q "CHANGELOG.md"; then
-            if git diff ${{ github.base_ref }}...HEAD CHANGELOG.md | grep -qE '^\+.*\(\[Issue #[0-9]+\]\(https://github.com/Arvid-L/ecclesia_db/issues/[0-9]+\))$'; then
+          if git diff ${{ github.base_ref }}...${{ github.event.pull_request.head.sha }} --name-only | grep -q "CHANGELOG.md"; then
+            if git diff ${{ github.base_ref }}...${{ github.event.pull_request.head.sha }} CHANGELOG.md | grep -qE '^\+.*\(\[Issue #[0-9]+\]\(https://github.com/Arvid-L/ecclesia_db/issues/[0-9]+\))$'; then
               echo "The specific line has been added to CHANGELOG.md."
               exit 0 # Success if the line has been added
             else
