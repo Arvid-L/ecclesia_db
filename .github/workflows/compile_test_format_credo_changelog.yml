@@ -126,14 +126,13 @@ jobs:
   changelog-check:
     name: Changelog Check
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v3
       - name: Check if the specific line has been added to CHANGELOG.md
         run: |
-          if git diff main HEAD --name-only | grep -q "CHANGELOG.md"; then
-            if git diff main...HEAD CHANGELOG.md | grep -qE '^\+.*\(\[Issue #[0-9]+\]\(https://github.com/Arvid-L/ecclesia_db/issues/[0-9]+\))$'; then
+          if git diff origin/main HEAD --name-only | grep -q "CHANGELOG.md"; then
+            if git diff origin/main...HEAD CHANGELOG.md | grep -qE '^\+.*\(\[Issue #[0-9]+\]\(https://github.com/Arvid-L/ecclesia_db/issues/[0-9]+\))$'; then
               echo "The specific line has been added to CHANGELOG.md."
               exit 0 # Success if the line has been added
             else
