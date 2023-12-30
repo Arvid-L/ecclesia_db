@@ -1,4 +1,4 @@
-name: Compile, Test, Format, Credo
+name: Compile, Test, Format, Credo, Changelog
 
 on: pull_request
 
@@ -122,3 +122,24 @@ jobs:
       - name: Run credo
         continue-on-error: true # TODO: Maybe make this mandatory in the future
         run: mix credo --strict
+
+  changelog-check:
+    name: Changelog Check
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Check if the specific line has been added to CHANGELOG.md
+        run: |
+          if git diff --name-only ${{ github.base_ref }} HEAD | grep -q "CHANGELOG.md"; then
+            if git diff ${{ github.base_ref }}...HEAD CHANGELOG.md | grep -qE '^(\+.*\(\[Issue #[0-9]+\]\(https://github.com/Arvid-L/ecclesia_db/issues/[0-9]+\))$'; then
+              echo "The specific line has been added to CHANGELOG.md."
+              exit 0 # Success if the line has been added
+            else
+              echo "The specific line has not been added to CHANGELOG.md."
+              exit 1 # Fail if the line has not been added
+            fi
+          else
+            echo "CHANGELOG.md has not changed."
+            exit 1 # Fail if CHANGELOG.md has not changed
+          fi
