@@ -1,6 +1,7 @@
 ## 2023-12-30
 
 - add authentication and registration ([Issue #2](https://github.com/Arvid-L/ecclesia_db/issues/2))
+- add CHANGELOG.md check (wrong issue number) ([Issue #10](https://github.com/Arvid-L/ecclesia_db/issues/10))
 
 ## 2023-12-29
 
